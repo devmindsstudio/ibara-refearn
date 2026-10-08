@@ -6,6 +6,26 @@ interface BuildAffiliateUrlOptions {
   partial?: boolean
 }
 
+const getHost = (url?: string) => {
+  try {
+    return url ? new URL(url).host : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Affiliate pages are served under /affiliate/{orgId} on the main app host
+ * (and on *.vercel.app, which the proxy never rewrites). Only an org's own
+ * domain is rewritten by the proxy and uses bare paths.
+ */
+export const isMainAppHost = (host?: string | null) =>
+  !!host &&
+  (host.includes("localhost:3000") ||
+    host === "refearnapp.com" ||
+    host === getHost(process.env.NEXT_PUBLIC_BASE_URL) ||
+    host.endsWith(".vercel.app"))
+
 export const buildAffiliateUrl = ({
   path,
   organizationId,
@@ -16,21 +36,7 @@ export const buildAffiliateUrl = ({
   const urlBase =
     baseUrl || process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
 
-  // Affiliate pages are path-based on the main app host (and on *.vercel.app,
-  // which the proxy never rewrites); only org custom domains use bare paths
-  const getHost = (url?: string) => {
-    try {
-      return url ? new URL(url).host : null
-    } catch {
-      return null
-    }
-  }
-  const baseHost = getHost(urlBase)
-  const needsOrgPath =
-    urlBase.includes("localhost:3000") ||
-    urlBase === "https://refearnapp.com" ||
-    baseHost === getHost(process.env.NEXT_PUBLIC_BASE_URL) ||
-    !!baseHost?.endsWith(".vercel.app")
+  const needsOrgPath = isMainAppHost(getHost(urlBase))
   let relativePath = needsOrgPath
     ? `/affiliate/${organizationId}/${path}`
     : `/${path}`

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { isMainAppHost } from "@/util/Url"
 
 export function useAffiliatePath(orgId?: string) {
   const router = useRouter()
@@ -11,12 +12,8 @@ export function useAffiliatePath(orgId?: string) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const currentBase = `${window.location.protocol}//${window.location.host}`
-      const host = window.location.host
-      const mainHost =
-        host.includes("localhost:3000") || host === "refearnapp.com"
-
       setBaseUrl(currentBase)
-      setIsMainHost(mainHost)
+      setIsMainHost(isMainAppHost(window.location.host))
     }
   }, [])
 
