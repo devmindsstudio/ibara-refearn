@@ -61,7 +61,8 @@ const nextConfig: NextConfig = {
     return []
   },
 
-  output: isSelfHosted ? "standalone" : undefined,
+  // Standalone output is for the Docker image; Vercel packages the app itself
+  output: isSelfHosted && !process.env.VERCEL ? "standalone" : undefined,
   trailingSlash: false,
 
   experimental: {

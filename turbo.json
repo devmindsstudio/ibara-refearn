@@ -69,8 +69,16 @@
         "POLAR_PRO_PRODUCT_ID_PRODUCTION",
         "POLAR_ULTIMATE_PRODUCT_ID_PRODUCTION",
         "POLAR_ULTIMATE_UPGRADE_PRODUCT_ID_PRODUCTION",
-        "APPSUMO_API_KEY"
-      ]
+        "APPSUMO_API_KEY",
+        "EMAIL_FROM_NAME",
+        "EMAIL_FROM_ADDRESS",
+        "EMAIL_PROVIDER",
+        "SMTP_HOST",
+        "SMTP_PORT",
+        "SMTP_USER",
+        "SMTP_PASSWORD"
+      ],
+      "passThroughEnv": ["VERCEL"]
     },
     "lint": {
       "dependsOn": ["^lint"]
