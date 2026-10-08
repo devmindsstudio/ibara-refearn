@@ -34,4 +34,9 @@ export const orgSettingsSchema = z.object({
     .string()
     .regex(/^\d+$/, "Must be a whole number")
     .default("45"),
+  leadRedirectUrl: z
+    .string()
+    .url("Enter a full URL, e.g. https://example.com")
+    .optional()
+    .or(z.literal("")),
 })

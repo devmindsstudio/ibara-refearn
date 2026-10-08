@@ -87,6 +87,7 @@ export default function Settings({ orgData, plan, isTeam = false }: Props) {
       ),
       holdPeriodDays: String(orgData?.holdPeriodDays ?? 45),
       showBranding: orgData?.showBranding ?? true,
+      leadRedirectUrl: orgData?.leadRedirectUrl ?? "",
     }),
     [orgData]
   )
@@ -248,6 +249,15 @@ export default function Settings({ orgData, plan, isTeam = false }: Props) {
                     { value: "aff", label: "aff" },
                   ]}
                   icon={Link2}
+                  affiliate={false}
+                />
+                <InputField
+                  control={form.control}
+                  name="leadRedirectUrl"
+                  label="Lead Redirect URL"
+                  placeholder="https://www.etijwaal.com"
+                  type="text"
+                  icon={Globe}
                   affiliate={false}
                 />
               </div>

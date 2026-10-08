@@ -22,9 +22,17 @@ export async function inviteAffiliateService({
     ),
   })
 
-  const baseUrl = primaryDomain
-    ? `https://${primaryDomain.domainName}`
-    : process.env.NEXT_PUBLIC_BASE_URL
+  // A DEFAULT subdomain only resolves when NEXT_PUBLIC_APP_DOMAIN points at
+  // this deployment (otherwise it falls under refearnapp.com), and nothing
+  // resolves to this machine in development. In those cases use the
+  // path-based affiliate portal on NEXT_PUBLIC_BASE_URL instead.
+  const isDev = process.env.NODE_ENV === "development"
+  const domainResolves =
+    primaryDomain?.type !== "DEFAULT" || !!process.env.NEXT_PUBLIC_APP_DOMAIN
+  const baseUrl =
+    primaryDomain && domainResolves && !isDev
+      ? `https://${primaryDomain.domainName}`
+      : `${process.env.NEXT_PUBLIC_BASE_URL}/affiliate/${orgId}`
 
   // 2. Standard Duplicate Check
   const existing = await db.query.affiliate.findFirst({

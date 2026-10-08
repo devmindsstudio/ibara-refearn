@@ -367,6 +367,7 @@ export const organization = pgTable(
     tosUrl: text("tos_url"),
     privacyPolicyUrl: text("privacy_policy_url"),
     holdPeriodDays: integer("hold_period_days").notNull().default(45),
+    leadRedirectUrl: text("lead_redirect_url"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
@@ -772,6 +773,44 @@ export const referrals = pgTable(
     index("referrals_email_link_idx").on(
       table.signupEmail,
       table.affiliateLinkId
+    ),
+  ]
+)
+export const lead = pgTable(
+  "lead",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
+    affiliateId: uuid("affiliate_id")
+      .notNull()
+      .references(() => affiliate.id, { onDelete: "cascade" }),
+    affiliateLinkId: text("affiliate_link_id")
+      .notNull()
+      .references(() => affiliateLink.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    referralId: uuid("referral_id").references(() => referrals.id, {
+      onDelete: "set null",
+    }),
+    name: text("name").notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    phone: varchar("phone", { length: 32 }).notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    redirectedTo: text("redirected_to"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    index("lead_organization_id_created_at_idx").on(
+      table.organizationId,
+      table.createdAt
+    ),
+    index("lead_affiliate_id_created_at_idx").on(
+      table.affiliateId,
+      table.createdAt
     ),
   ]
 )

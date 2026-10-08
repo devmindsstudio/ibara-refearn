@@ -87,6 +87,9 @@ export async function updateSettings(
   if (data.holdPeriodDays !== undefined) {
     updateData.holdPeriodDays = Math.round(Number(data.holdPeriodDays))
   }
+  if (data.leadRedirectUrl !== undefined) {
+    updateData.leadRedirectUrl = data.leadRedirectUrl?.trim() || null
+  }
   if (Object.keys(updateData).length === 0) return
 
   // Database Update
