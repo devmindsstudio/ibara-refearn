@@ -368,6 +368,8 @@ export const organization = pgTable(
     privacyPolicyUrl: text("privacy_policy_url"),
     holdPeriodDays: integer("hold_period_days").notNull().default(45),
     leadRedirectUrl: text("lead_redirect_url"),
+    // Optional: where iPhone/iPad visitors go after the lead form (e.g. the App Store); others use leadRedirectUrl
+    leadRedirectUrlIos: text("lead_redirect_url_ios"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

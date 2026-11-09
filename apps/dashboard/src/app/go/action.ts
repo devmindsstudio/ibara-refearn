@@ -86,7 +86,14 @@ export const submitLead = async ({
 
     const headerList = await headers()
     const leadId = randomUUID()
-    const redirectUrl = new URL(link.leadRedirectUrl)
+    // Smart redirect: iPhone/iPad visitors go to the iOS URL (e.g. App Store) when one is set
+    const { os } = new UAParser(headerList.get("user-agent") || "").getResult()
+    const isIos = os.name === "iOS" || os.name === "iPadOS"
+    const redirectUrl = new URL(
+      isIos && link.leadRedirectUrlIos
+        ? link.leadRedirectUrlIos
+        : link.leadRedirectUrl
+    )
     redirectUrl.searchParams.set(link.referralParam ?? "ref", link.linkId)
     redirectUrl.searchParams.set("lead_id", leadId)
 

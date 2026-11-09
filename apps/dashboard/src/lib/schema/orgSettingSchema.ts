@@ -39,4 +39,9 @@ export const orgSettingsSchema = z.object({
     .url("Enter a full URL, e.g. https://example.com")
     .optional()
     .or(z.literal("")),
+  leadRedirectUrlIos: z
+    .string()
+    .url("Enter a full URL, e.g. https://apps.apple.com/app/id123")
+    .optional()
+    .or(z.literal("")),
 })

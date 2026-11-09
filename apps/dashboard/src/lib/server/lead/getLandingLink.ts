@@ -17,6 +17,7 @@ export const getLandingLink = async (code: string) => {
       logoUrl: organization.logoUrl,
       referralParam: organization.referralParam,
       leadRedirectUrl: organization.leadRedirectUrl,
+      leadRedirectUrlIos: organization.leadRedirectUrlIos,
     })
     .from(affiliateLink)
     .innerJoin(affiliate, eq(affiliate.id, affiliateLink.affiliateId))

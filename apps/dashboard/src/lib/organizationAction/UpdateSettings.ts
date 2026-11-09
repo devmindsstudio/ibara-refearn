@@ -90,6 +90,9 @@ export async function updateSettings(
   if (data.leadRedirectUrl !== undefined) {
     updateData.leadRedirectUrl = data.leadRedirectUrl?.trim() || null
   }
+  if (data.leadRedirectUrlIos !== undefined) {
+    updateData.leadRedirectUrlIos = data.leadRedirectUrlIos?.trim() || null
+  }
   if (Object.keys(updateData).length === 0) return
 
   // Database Update

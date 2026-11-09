@@ -88,6 +88,7 @@ export default function Settings({ orgData, plan, isTeam = false }: Props) {
       holdPeriodDays: String(orgData?.holdPeriodDays ?? 45),
       showBranding: orgData?.showBranding ?? true,
       leadRedirectUrl: orgData?.leadRedirectUrl ?? "",
+      leadRedirectUrlIos: orgData?.leadRedirectUrlIos ?? "",
     }),
     [orgData]
   )
@@ -256,6 +257,15 @@ export default function Settings({ orgData, plan, isTeam = false }: Props) {
                   name="leadRedirectUrl"
                   label="Lead Redirect URL"
                   placeholder="https://www.etijwaal.com"
+                  type="text"
+                  icon={Globe}
+                  affiliate={false}
+                />
+                <InputField
+                  control={form.control}
+                  name="leadRedirectUrlIos"
+                  label="iPhone Redirect URL (optional)"
+                  placeholder="https://apps.apple.com/app/id123"
                   type="text"
                   icon={Globe}
                   affiliate={false}

@@ -80,6 +80,7 @@ export const getOrgData = async (
       minimumPayoutThreshold: String(org.minimumPayoutThreshold ?? "0"),
       holdPeriodDays: org.holdPeriodDays,
       leadRedirectUrl: org.leadRedirectUrl ?? "",
+      leadRedirectUrlIos: org.leadRedirectUrlIos ?? "",
     },
   }
 }
